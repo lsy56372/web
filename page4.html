@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Leaflet</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+    <script src="https://unpkg.com/geotiff@2.0.2/dist/geotiff.bundle.js"></script>
+
+    <!-- Leaflet Sidebar Plugin -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-sidebar-v2/css/leaflet-sidebar.css" />
+    <script src="https://unpkg.com/leaflet-sidebar-v2/js/leaflet-sidebar.js"></script>
+
+    <!-- style -->
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* 100% viewport height */
+            overflow: hidden; /* Hide scroll bars */
+        }
+
+        #header {
+            /* header style */
+            text-align: center;
+            padding: 0px;
+            background-color: #2d6b48a7;
+            color: white;
+            margin: 0;
+            padding: 10px;
+            font-size: 20px;
+            z-index: 1; /* Ensure it's above the map */
+        }
+
+        #map {
+            flex: 1; /* Take remaining vertical space */
+            width: 100%; /* Take full width */
+            height: 100%; /* Take full height */
+            float: left;
+            transition: margin-left 0.5s; /* Add smooth transition effect when changing margin */
+        }
+
+        #sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 60px;
+            transition: 0.5s;
+            color: white;
+        }
+
+        #sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        #sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        #sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            left: 25px;
+            font-size: 36px;
+            margin-right: 50px;
+            cursor: pointer; /* Add cursor pointer */
+            color: white; /* Set the close button color to white */
+        }
+
+        #sidebar-content {
+            padding: 16px;
+            color: white;
+        }
+        #open-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+            z-index: 3; /* Ensure it's above the map and sidebar */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Open sidebar button -->
+    <div id="open-btn" onclick="openNav()">&#9776;</div>
+    <!-- Top section -->
+    <div id="header">
+        <h1>Leaflet Interactive Map</h1>
+    </div>
+
+    <!-- Create sidebar -->
+    <div id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <div id="sidebar-content">
+            <!-- Add your sidebar content here -->
+            <p>Sidebar Content</p>
+        </div>
+    </div>
+
+    <!-- Create map container -->
+    <div id="map"></div>
+
+    <!-- JavaScript code -->
+    <script>
+        function openNav() {
+            document.getElementById("sidebar").style.width = "250px";
+            document.getElementById("map").style.marginLeft = "250px";
+        }
+
+        // Function to close sidebar
+        function closeNav() {
+            document.getElementById("sidebar").style.width = "0";
+            document.getElementById("map").style.marginLeft = "0";
+        }
+
+        // Rest of your existing JavaScript code...
+        // (Note: I didn't make any changes to your existing code)
+        var mapOptions = {
+            center: [55.9533, -3.1883],
+            zoom: 12
+        }
+
+        var map = new L.map('map', mapOptions);
+
+        L.control.scale().addTo(map);
+
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        var drawControl = new L.Control.Draw({
+            position: 'topright',
+            edit: {
+                featureGroup: drawnItems
+            }
+        });
+
+        map.addControl(drawControl);
+
+        var bikeLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+        var streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png');
+        var esriLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles © Esri - Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+        var googleLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+        });
+
+        var mapboxLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/dark-v10',
+            accessToken: 'pk.eyJ1IjoibHN5NTYzNzIiLCJhIjoiY2xwMDBvbWt4MDJ1ODJocXU4a3JnbDNrcSJ9.Mtdndp0EsOADZVjoo848LQ'
+        });
+
+        var baseMaps = {
+            "Bike Layer": bikeLayer,
+            "Street Layer": streetLayer,
+            "esriLayer": esriLayer,
+            "googleLayer": googleLayer,
+            "mapboxLayer": mapboxLayer,
+        };
+
+        var overlayMaps = {
+            "Drawn Items": drawnItems,
+            "ed": L.geoJSON(),
+            "ed_buffer-1km": L.geoJSON(),
+            "ed_buffer-1km_bb": L.geoJSON()
+        };
+
+        L.control.layers(baseMaps, overlayMaps, { position: 'bottomright' }).addTo(map);
+
+        bikeLayer.addTo(map);
+
+        function addTiffLayer(tiffUrl, layer) {
+            fetch(tiffUrl)
+                .then(response => response.arrayBuffer())
+                .then(buffer => GeoTIFF.fromArrayBuffer(buffer))
+                .then(geotiff => geotiff.getImage())
+                .then(image => {
+                    const canvas = image.getCanvas();
+                    const tiffLayer = L.imageOverlay(canvas.toDataURL(), image.getBounds());
+                    tiffLayer.addTo(layer);
+                })
+                .catch(error => console.error('加载TIFF时出错:', error));
+        }
+
+        var tiffUrl = 'nt_chm_5m.tif';
+        addTiffLayer(tiffUrl, drawnItems);
+        drawnItems.bringToFront();
+
+        map.on(L.Draw.Event.CREATED, function (event) {
+            var layer = event.layer;
+            drawnItems.addLayer(layer);
+        });
+
+        function addGeoJSONToMap(geojsonUrl, layer) {
+            fetch(geojsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data).addTo(layer);
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+        var geojsonUrl1 = 'data/ed.geojson';
+        addGeoJSONToMap(geojsonUrl1, overlayMaps["ed"]);
+
+        var geojsonUrl2 = 'data/ed_buffer-1km.geojson';
+        addGeoJSONToMap(geojsonUrl2, overlayMaps["ed_buffer-1km"]);
+
+        var geojsonUrl3 = 'data/ed_buffer-1km_bb.geojson';
+        addGeoJSONToMap(geojsonUrl3, overlayMaps["ed_buffer-1km_bb"]);
+
+        
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
