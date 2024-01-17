@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<link rel="stylesheet" href="./CSS/environment.css">
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script src="./js/vanilla-tilt.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&display=swap" rel="stylesheet">
+
+
+
+
+<title>Full Screen Background Image with Text Overlay</title>
+<style>
+
+  
+</style>
+</head>
+<body>
+  
+<div class="bg-image">
+  <h1 id="page-title"><a href="./website_web/connecting_dots.html">Connectivity.</a></h1>
+  <nav class="top-nav">
+    <a href="./website_web/about_us.html">About us</a>
+    <a href="./website_web/species.html">Species Information</a>
+    <a href="./website_web/practical_guide.html">Practical Guide</a>
+    <a href="./test1.html">Explore</a>
+    <!-- Add other links as needed -->
+</nav>
+  <div class="container1">
+    <h1>What is environmental deprivation?</h1>
+  </div>
+  <div class="container">
+    <div class="card">
+        <div class="content">
+            <h2>01</h2>
+            <h3>Introduction</h3>
+            
+            <a href="#class2">Read More</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="content">
+            <h2>02</h2>
+            <h3>Environmental deprivation</h3>
+            
+            <a href="#class3">Read More</a>
+        </div>
+    </div>
+    <div class="card">
+        <div class="content">
+            <h2>03</h2>
+            <h3>Connectivity improvements</h3>
+            
+            <a href="#class5">Read More</a>
+        </div>
+    </div>
+</div>
+
+</div>
+
+  <script>
+     
+      VanillaTilt.init(document.querySelectorAll(".card"),{
+          max: 15,  
+          speed: 400,  
+          glare: true,  
+          "max-glare": 1  
+          
+      })
+  </script>
+  
+</div>
+
+<div id="class2"class="class2">
+  <p>Globally, habitat fragmentation driven by land use intensification, threatens biodiversity and reduces essential ecosystems services. The decreasing ability of ecosystems to provide society with services, like health benefits, is a process increasingly being described as <u>environmental deprivation</u>. 
+
+  
+
+    Within Scotland, the decline of habitat connectivity governed by fragmentation is one of seven core pressures on biodiversity (Scottish Government, 2015). </p>
+  <div class="flex-container2">
+  <div class="container2">
+    <div class="card2">
+        <div class="content">
+            
+            <p>11% of species are threatened with extinction (Burns et al., 2023).  </p>
+            
+        </div>
+    </div>
+  </div>
+  <div class="text-container">
+    <p>In reaction to these pressures, Biodiversity Net Gain (BNG) policy mandates that new developments increase biodiversity by at least 10% through habitat enhancement (Martinez-Cillero et al., 2023). Nevertheless, guidance on where improvements need to be implemented is overall poor and lacking, often meaning environmentally deprived areas are bypassed (Martinez-Cillero, 2022). In our project's context, environmental deprivation is specifically defined as:  
+
+      <span style="font-family: 'Helvetica', Tahoma, Geneva, Verdana, sans-serif; font-size: 35px;"><br >"<u>Areas of low connectivity that provide less or lower ecosystem services than areas of high connectivity</u>" <br></span>
+
+    </p>  
+  </div>
+ 
+  </div>
+
+</div>
+
+  
+
+<!--------------------------------------------------------------------------------------------------------------->
+<div id="class3" class="class3">
+  
+  <div class="emap">
+    <img src="./IMG/3.jpg" alt="picture" onclick="showFullImage(this)">
+    <div class="image-caption">
+      <p>Model of environmental deprivation in Edinburgh, produced by comparing the density of connectivity and population within data zones. The inset map focuses on the city centre, where high population density and low connectivity represent a region of high relative environmental deprivation.</p>
+    </div>
+
+  </div>
+  <div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+  </div>
+  <div class="c3_text">
+    <p class="text1">Connectivity modelling is important for identifying where targeted connectivity enhancement would bring environmentally deprived areas valuable ecosystem services. There exists a current paucity of research dedicated to habitat connectivity at local scales. Our project addresses this research gap by modelling habitat connectivity for targeted conservation in Edinburgh, where, biodiversity action plans, coherent with national policy, call for connectivity enhancement between fragmented habitats (City of Edinburgh Council, CEC, 2022) with assessment of environmental deprivation.</p>
+  </div>
+  <div class="c3_text2">
+    <p class="text1">To meaningfully model and identify areas of environmental deprivation, population density within Edinburgh's data zones and density of mean connectivity were compared. This model revealed the city centre, combining its low habitat connectivity and high population density, as environmentally deprived. As a result, we declared that these areas should be prioritised for targeted conservation efforts more than areas of sparse population (e.g., industrial areas), as intervention in the former sites will bring ecosystem services to more people (Martinez-Cillero et al., 2023).</p>
+  </div>
+  
+   
+</div>
+<script>
+  var modal = document.getElementById("myModal");
+
+
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+
+
+function showFullImage(imgElement) {
+  modal.style.display = "block";
+  modalImg.src = imgElement.src;
+  captionText.innerHTML = imgElement.alt;
+}
+
+
+var span = document.getElementsByClassName("close")[0];
+
+
+span.onclick = function() {
+  modal.style.display = "none";
+}
+</script>
+<!--class5------------------------------------------------------------------------------------------------------------->
+<div id="class5" class="class5">
+  
+  <div class="emap2">
+    <img src="./IMG/f8.jpg" alt="picture2" onclick="showFullImage(this)">
+    <div class="image-caption2">
+      <p>Simulation illustrating potential habitat connectivity improvements in more environmentally deprived areas, showing (a) species-averaged connectivity under ‘baseline’ unmodified land cover, (b) species-averaged connectivity under ‘improved’ land cover, artificially modified through conversion of (c) vacant land parcels, obtained through Digimap from the 2022 Scottish Vacant and Derelict Land Survey, into greenspaces that constitute a mix of grassland and woodland; (d) shows the subtraction of (a) from (b), highlighting change in connectivity between the two scenarios.</p>
+    </div>
+
+  </div>
+  <div id="myModal2" class="modal2">
+    <span class="close2">&times;</span>
+    <img class="modal-content2" id="img012">
+    <div id="caption2"></div>
+  </div>
+  <div class="c5_text2">
+    <p class="text1">We modelled potential, improved habitat connectivity from Edinburgh Castle to The Meadows. Areas of vacant land were converted into greenspaces and as a result substantially improved connectivity in the city centre, creating a continuous connection between previously fragmented greenspaces, from Edinburgh Castle to The Meadows. The overall goal of this example was to visually simulate the impact of targeted conservation actions like greenspace creation on habitat connectivity and ecosystem services (CEC, 2022) in Edinburgh city centre, an area we confirmed as environmentally deprived.</p>
+  </div>
+  <div class="c5_text22">
+    <p class="text12"><b>For more information regarding habitat connectivity and environmental deprivation used in this project, follow the links below:</b></p>
+    <ul>
+      <li><strong><a href="https://simd.scot/#/simd2020/BTTTFTT/9/-4.0000/55.9000/" target="_blank">Scottish Index of Multiple Deprivation 2020</a></strong></li>
+      <li><strong><a href="https://www.nature.com/articles/nature11148" target="_blank">Biodiversity loss and its impact on humanity</a></strong></li>
+      <li><strong><a href="https://www.edinburgh.gov.uk/downloads/download/13083/edinburgh-biodiversity-action-plan" target="_blank">Edinburgh Biodiversity Action Plan 2022-2027</a></strong></li>
+      <li><strong><a href="https://openresearch.surrey.ac.uk/esploro/outputs/doctoral/Optimising-Biodiversity-Net-Gain-Outcomes-for/99720865002346" target="_blank">Optimising Biodiversity Net Gain Outcomes for People and Nature</a></strong></li>
+      <li><strong><a href="https://www.sciencedirect.com/science/article/pii/S0301479722024306?via%3Dihub" target="_blank">Functional Connectivity Modelling and Biodiversity Net Gain in England</a></strong></li>
+      <li><strong><a href="https://www.routledge.com/Connectivity-Conservation-Management-A-Global-Guide/Worboys-Francis-Lockwood/p/book/9781844076048" target="_blank">Connectivity Conservation Management: A Global Guide</a></strong></li>        
+  </ul>
+
+  </div>
+  
+   
+</div>
+<!--------------------------------------------------------------------------------------------------------------->
+
+<!--------------------------------------------------------------------------------------------------------------->
+<!-- Back to Top Button -->
+<a id="back-to-top" href="#" class="back-to-top" role="button">
+  <i class="fas fa-arrow-up fa-2xl"></i>
+</a>
+<script>
+ 
+var mybutton = document.getElementById("back-to-top");
+
+
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+
+mybutton.addEventListener('click', function(){
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+});
+
+</script>
+<!--AI-->
+<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+      <df-messenger
+  project-id="gold-doodad-411202"
+  agent-id="c5aa8244-764d-46a2-8eac-60ba5eb3908a"
+  language-code="en">
+  <df-messenger-chat-bubble
+   chat-title="little edinburgh">
+  </df-messenger-chat-bubble>
+</df-messenger>
+<style>
+  df-messenger {
+    z-index: 999;
+    position: fixed;
+    bottom: 80px;
+    right: 16px;
+  }
+</style>  
+<!--AI-->
+
+</body>
+</html>

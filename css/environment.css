@@ -1,0 +1,644 @@
+@import url("http://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
+
+
+body, html {
+    height: 100%;
+    margin: 0;
+    
+    scroll-behavior: smooth; 
+  
+  }
+  .bg-image {
+    background-color: whitesmoke;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    height: 1000px; 
+    width: 100%; 
+    position: relative;
+}
+
+#page-title {
+  position: absolute;
+  top: 50px;  /* Adjust as needed */
+  left: 50px; /* Adjust as needed */
+  font-size: 35px; /* Adjust as needed */
+  font-family: Helvetica, sans-serif; /* Choose your preferred font */
+  /* text-decoration: underline; Underlines the text */
+}
+h1 a {
+  text-decoration: none; /* Removes the underline from the link */
+  color: inherit; /* Inherits the text color from the parent element */
+}
+
+h1 a:hover {
+  text-decoration: underline; /* Optional: underline on hover for better UX */
+}
+.container1 {
+    position: absolute;
+    top: 30%;
+    left:40%;
+    transform: translate(-50%, -50%);
+    color: rgb(0, 0, 0);
+    text-align: left;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0); 
+    border-radius: 10px; 
+    
+}
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  .container1 {
+    top: 15vh; 
+    left: 50%;
+    transform: translate(-50%, -15%);
+    width: 70%; 
+    padding: 15px;
+  }
+}
+
+.top-nav {
+  position: fixed; /* or 'absolute' if no scrolling is needed */
+  top: 0; /* Align to the top */
+  right: 0; /* Align to the right */
+  padding: 10px 20px;
+  background-color: #f5f5f5; /* You can change the background color as needed */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow */
+}
+
+.top-nav a {
+  text-decoration: none;
+  color: #333;
+  margin-left: 10px; /* Space between links */
+  font-size: 16px;
+}
+
+/* Optional: Change link appearance on hover */
+.top-nav a:hover {
+  color: #007bff;
+}
+/*-------------------------------------------------------------------------------------------------------------------------*/
+  .class4{
+    height: 1000px;
+    /*background-color: black;*/
+    color: aliceblue;
+
+  }
+  .c4bg_image {
+    background-image: url('../IMG/f6.png'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    height: 1000px; 
+    width: 100%; 
+    position: relative;
+}
+/*-------------------------------------------------------------------------------------------------------------------------*/
+.class3 {
+  position: relative;
+  height: 100vh;
+  background-color: rgb(254, 254, 254);
+}
+
+.class3 h1 {
+  text-align: center;
+}
+
+.emap {
+  position: absolute;
+  width: 70vh; 
+  height: 70vh; 
+  top: 10%;  
+  right: 10%; 
+  border: #999;
+}
+
+.emap img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  cursor: zoom-in;
+}
+.image-caption p{
+  margin-top: 20px; 
+  text-align: left; 
+  font-size: 18px; 
+  color: #666; 
+}
+
+.c3_text{
+  position: absolute;
+  height: 50%;
+  width: 40%; 
+  margin-bottom: 20px; 
+}
+
+.c3_text{
+  height: 50%; 
+  top: 10%;
+  left: 5%;
+  margin-left: 20;
+}
+
+.c3_text2{
+  position: absolute;
+  height: 50%;
+  width: 40%; 
+  margin-bottom: 20px;
+}
+
+.c3_text2 {
+  height: 50%; 
+  top: 55%;
+  left: 5%;
+  margin-left: 20;
+  font-size: 18px;
+  overflow: none;
+}
+
+.c3_text p{
+  margin: 20px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  background-color: whitesmoke;
+  border: 2px solid transparent;
+  margin-left: auto; /* Centering the box */
+  margin-right: auto; /* Centering the box */
+  text-align: center;
+  padding: 20px;
+  justify-content: center;
+  overflow: none;
+}
+
+.c3_text2 p{
+  margin: 20px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  background-color: whitesmoke;
+  border: 2px solid transparent;
+  margin-left: auto; /* Centering the box */
+  margin-right: auto; /* Centering the box */
+  text-align: center;
+  padding: 20px;
+  justify-content: center;
+  overflow: none;
+}
+
+  
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 100; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.9); 
+  }
+  
+  
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px; 
+  }
+  
+ 
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: #fff;
+    font-size: 35px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #999;
+    text-decoration: none;
+    cursor: pointer;
+  }
+ /*--------class5-----------------------------------------------------------------------------------------------------------------*/ 
+ .class5 {
+  position: relative;
+  height: 800px;
+  background-color: rgb(254, 254, 254);
+}
+
+.class5 h1 {
+  text-align: center;
+}
+
+.emap2 {
+  position: absolute;
+  width: 70vh; 
+  height: 70vh; 
+  top: 10%;  
+  right: 10%; 
+  border: #999;
+}
+
+.emap2 img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  cursor: zoom-in;
+}
+.image-caption2 p{
+  margin-top: 20px; 
+  text-align: left; 
+  font-size: 18px; 
+  color: #666; 
+}
+
+.c5_text2{
+  position: absolute;
+  height: 50%;
+  width: 40%; 
+  margin-bottom: 20px; 
+}
+
+.c5_text2{
+  height: 50%; 
+  top: 10%;
+  left: 5%;
+  margin-left: 20;
+}
+
+.c5_text22{
+  position: absolute;
+  height: 50%;
+  width: 50%; 
+  margin-bottom: 20px; 
+}
+
+.c5_text22{
+  height: 50%; 
+  top: 55%;
+  left: 3%;
+  margin-left: 20;
+}
+
+.c5_text2 p{
+  margin: 20px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  background-color: whitesmoke;
+  border: 2px solid transparent;
+  margin-left: auto; /* Centering the box */
+  margin-right: auto; /* Centering the box */
+  text-align: center;
+  padding: 20px;
+  justify-content: center;
+  overflow: none;
+}
+
+.c5_text22 p{
+  margin: 20px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  margin-left: auto; /* Centering the box */
+  margin-right: auto; /* Centering the box */
+  text-align: left;
+  padding: 20px;
+  justify-content:left;
+  overflow: none;
+}
+
+  
+.modal2 {
+    display: none; 
+    position: fixed; 
+    z-index: 100; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.9); 
+  }
+  
+  
+  .modal-content2 {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px; 
+  }
+  
+ 
+  .close2 {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: #fff;
+    font-size: 35px;
+    font-weight: bold;
+  }
+  
+  .close2:hover,
+  .close2:focus {
+    color: #999;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+/***************************************************************************************************/
+
+    .class2{
+    
+    height: 1000px;
+    background-color: rgb(0, 0, 0);
+    color:aliceblue;
+    }
+
+  h1 {
+    font-size: 60px; 
+    margin-bottom: 20px;
+    
+  }
+  p {
+    font-size: 30px; 
+    margin-left: 50px;
+  }
+
+.slider-container {
+    position: relative;
+    width: 80vh; 
+    height: 40vh; 
+    margin: auto;
+}   
+    .slider {
+      width: 80vh; /* or the width you desire */
+      height: 30vh; /* or the height you desire */
+  }
+  .slider div {
+      background-size: cover; /* Cover the entire container with the background image */
+      background-position: center; /* Center the background image */
+      height: 30vh; /* Height of each slide item */
+  }
+  /* Set the default color for the slider dots */
+  .slick-dots li button:before {
+      color: white !important;
+  }
+  
+  .slick-dots li.slick-active button:before {
+      color: red !important;
+  }
+  
+  .slider1 {
+      position: relative;
+      width: 80vh; /* or the width you desire */
+      height: 40vh; /* or the height you desire */
+      margin: auto;
+      overflow: hidden;
+      background-color: #9c9c9c; /* Gray background */
+      padding: 8px; /* Padding to create a border effect */
+      box-sizing: border-box; /* Ensure padding doesn't affect the overall width */
+      border: 4px solid #ffffff; /* Border color and width */
+  }
+  
+  .info-boxes {
+      display: flex;
+      justify-content: space-around; /* Distribute boxes evenly horizontally */
+      padding: 20px;
+  }
+  
+  .info-box {
+      width: 300px; /* Each box occupies 20% of the container's width */
+      height: 300px;
+      border: 1px solid #ffffff; /* Box border */
+      padding: 10px;
+      margin: 10px; /* Ensure spacing between boxes */
+      background-color: #000000; /* Box background color */
+      text-align: center; /* Center text */
+  }
+  
+  .info-box h2 {
+      margin-top: 0;
+  }
+  
+  .info-box p {
+      font-size: 14px;
+  }
+  
+  .logo {
+      display: flex; /* Set as a Flex container */
+      justify-content: space-around; /* Horizontal centering */
+      align-items: center; /* Vertical centering */
+      margin: 10px; /* Ensure spacing between boxes */
+  }
+  
+/*-------------------------------------------------------------------------------------------------------------------------*/
+.container{
+    position: relative;
+    top:500px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    z-index: 1;
+}
+
+.container .card{
+    
+    position: relative;
+    width: 400px;
+    height: 400px;
+    background-color: rgba(255,255,255,0.1);
+    margin: 30px;
+    border-radius: 15px;
+    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.5);
+    border-left: 1px solid rgba(255,255,255,0.5);
+    backdrop-filter: blur(5px);
+}
+.container .card .content{
+    padding: 20px;
+    text-align: center;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: 0.5s;
+}
+.container .card:hover .content{
+    transform: translateY(0);
+    opacity: 1;
+}
+.container .card .content h2{
+    position: absolute;
+    top: -80px;
+    right: 25px;
+    font-size: 128px;
+    color: rgba(255,255,255,0.05);
+}
+.container .card .content h3{
+    font-size: 28px;
+    color: #fff;
+}
+.container .card .content p{
+    font-size: 16px;
+    color: #fff;
+    font-weight: 300;
+    margin: 10px 0 15px 0;
+}
+.container .card .content a{
+    position: relative;
+    display: inline-block;
+    padding: 8px 20px;
+    margin-top: 15px;
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 500;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.container .card:nth-child(1) {
+    background-image: url('../IMG/en_1.png'); 
+    background-size: cover; 
+    background-position: center; 
+}
+.container .card:nth-child(2) {
+    background-image: url('../IMG/f2.png'); 
+    background-size: cover; 
+    background-position: center; 
+}
+.container .card:nth-child(3) {
+    background-image: url('../IMG/f3.png'); 
+    background-size: cover; 
+    background-position: center; 
+}
+/*-------------------------------------------------------------------------------------------------------------------------*/
+.container2{
+    position: relative;
+    /*top:50px;*/
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    width: 600px;
+    flex-wrap: wrap;
+    z-index: 1;
+    
+}
+.class2 p{
+    font-family:Arial, Helvetica, sans-serif;
+    line-height: 1.8;
+    font-size: 24px;
+    
+}
+.text-container {
+    height: 600px;
+    width: 50%;
+    color: #d1d1d1; 
+    border: 2px solid #fff; 
+    border-radius: 20px;
+    
+}
+.text-container p{
+    font-size: 1.5rem;
+    font-family:'Times New Roman', Times, serif;
+    margin: 30px; 
+    line-height: 1.8;
+    
+    
+}
+.flex-container2{
+    display: flex; 
+    margin-top: 60px;
+    
+  }
+.container2 .card2{
+    position: relative;
+    width: 600px;
+    height: 600px;
+    background-color: rgba(255,255,255,0.1);
+    margin-left: 30px;
+    margin-right: 30px;
+    border-radius: 15px;
+    box-shadow: 20px 20px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    border-top: 1px solid rgba(255,255,255,0.5);
+    border-left: 1px solid rgba(255,255,255,0.5);
+    backdrop-filter: blur(5px);
+}
+.container2 .card2 .content{
+    padding: 20px;
+    text-align: left;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: 0.5s;
+    
+}
+.container2 .card2:hover .content{
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.container2 .card2 .content p{
+    font-size: 32px;
+    color: #fff;
+    font-weight: 300;
+    margin: 10px 0 15px 0;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.container2 .card2:nth-child(1) {
+    background-image: url('../IMG/f4.png'); 
+    background-size: cover; 
+    background-position: center; 
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------*/
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: none;
+    width: 55px;
+    height: 55px;
+    text-align: center;
+    line-height: 50px;
+    background: rgb(196, 195, 195); 
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    z-index: 1000;
+  }
+  
+  
+  .back-to-top:hover {
+    background: rgb(0, 0, 0); 
+
+  }
+#page-title {
+    position: absolute;
+    top: 50px;  /* Adjust as needed */
+    left: 50px; /* Adjust as needed */
+    font-size: 35px; /* Adjust as needed */
+    font-family: Helvetica, sans-serif; /* Choose your preferred font */
+    /* text-decoration: underline; Underlines the text */
+}
+h1 a {
+    text-decoration: none; /* Removes the underline from the link */
+    color: inherit; /* Inherits the text color from the parent element */
+}
+
+h1 a:hover {
+    text-decoration: underline; /* Optional: underline on hover for better UX */
+}
+/*----------------class5---------------------------------------------------------------------------------------------------------*/

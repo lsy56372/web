@@ -1,0 +1,335 @@
+body {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+}
+
+#map {
+  flex: 0 0 85vh; /* Set the map height to half of the viewport */
+  width: 100%;
+  position: relative; 
+}
+
+#download-container {
+  /* Ensure the button container can wrap if needed */
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#imageBox {
+  display: none; /* Initially set to invisible */
+  width: 100%; /* Image box occupies the entire container width */
+  padding: 10px; /* Adjust as needed */
+}
+
+
+/* Keep other styles unchanged */
+
+#over-layers-control .leaflet-control-layers-toggle {
+  
+  width: 100px; /* Or other dimensions */
+  height: 75px; /* Same as width */
+  
+}
+#over-layers-control .leaflet-control-layers-toggle::after {
+  content: 'Connectivity'; /* Your text content */
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Ensure text is centered */
+  font-size: 14px; /* Text size */
+  color: #333; /* Text color */
+}
+
+#base-layers-control .leaflet-control-layers-toggle {
+  /*background-image: url('path_to_base_icon.png');*/
+  width: 100px; /* Or other dimensions */
+  height: 75px; /* Same as width */
+  border-radius: 50%; /* This will make the button circular */
+  
+}
+#base-layers-control .leaflet-control-layers-toggle::after {
+  content: 'Basemap'; /* Your text content */
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Ensure text is centered */
+  font-size: 14px; /* Text size */
+  color: #333; /* Text color */
+}
+
+.leaflet-container .leaflet-control-mouseposition {
+  background-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 5px #bbb;
+  padding: 0 5px;
+  margin:0;
+  color: #333;
+  font: 11px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+
+.card-container {
+  display: flex; /* Enable Flexbox layout */
+  justify-content: space-around; /* Space between cards is evenly distributed */
+  flex-wrap: wrap; /* Allow cards to wrap if space is insufficient */
+  gap: 20px; /* Space between cards, can also use margin */
+}
+
+.card {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  max-width: 300px;
+  /* If you need the card width to adjust responsively, set flex-basis or percentage width */
+  /* flex: 1; */
+  /* Or */
+  /* width: 100%; */
+}
+
+.card-img-top {
+  width: 100%;
+  display: block;
+  height: auto;
+  height: 200px; /* Set a fixed height */
+  object-fit: cover; /* Image will be scaled to fill the element's box, some parts may not be displayed */
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  margin-bottom: .75rem;
+  font-size: 1.25rem;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #333;
+}
+ 
+.legend-container {
+  display: flex;
+  align-items: stretch;
+}
+
+.legend-gradient {
+  width: 20px; /* Width can be adjusted as needed */
+  height: 100px; /* Height can be adjusted as needed */
+  border: 1px solid #999;
+  background: linear-gradient(to top, #440154, #3B528C, #21918D, #5DC963, #FDE725);
+}
+
+.legend-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 5px; /* Adjust as needed */
+}
+
+.legend-labels span {
+  font-size: 0.8em; /* Adjust font size as needed */
+  text-align: left;
+}
+
+.legend-gradient-pop {
+  width: 20px; /* Width can be adjusted as needed */
+  height: 100px; /* Height can be adjusted as needed */
+  border: 1px solid #999;
+  background: linear-gradient(to top, #FF0000, #FFA500, #FFFF00, #0000FF, #008000);
+}
+.legend-gradient-green {
+  width: 20px; /* Width can be adjusted as needed */
+  height: 100px; /* Height can be adjusted as needed */
+  border: 1px solid #999;
+  background: linear-gradient(to bottom, 
+    rgb(0, 78, 31) 0%,    /* Dark green color, start from the bottom */
+    rgb(63, 166, 155) 40%, /* Darker green */
+    rgb(127, 255, 212) 70%, /* Lighter green */
+    rgb(191, 255, 233) 90%, /* Near white light green */
+    rgb(255, 255, 255) 100%); /* White color, end at the top */
+}
+
+
+.chart-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* or use space-around to increase spacing */
+}
+
+.small-container {
+  flex: 0 0 60%; /* Each small container occupies 60% of the row width, leaving gaps */
+  /* flex: 1 1 48%; can also be used, which allows small containers to shrink and expand as needed */
+  height: 450px; /* Or your desired height */
+  margin-bottom: 20px; /* Gap between containers in each row */
+  background-color: #e6e5e5; /* Only for visual display */
+  border-radius: 15px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.landcover {
+  position: relative;
+}
+
+.populationdensity {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  width: 100%; /* Set container width to 100% */
+  position: relative;
+}
+
+.connectivity_mean {
+  position: relative;
+}
+
+.greenspace {
+  position: relative;
+}
+
+.chart-buttons button {
+  font-size: 16px; /* Increase font size */
+  padding: 10px 20px; /* Increase padding inside buttons */
+  background-color: #006400; /* Set button background color to dark green */
+  color: white; /* Set button text color to white */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Add rounded corners to buttons */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  margin: 5px; /* Increase space between buttons */
+  transition: background-color 0.3s; /* Add a transition effect */
+}
+
+.chart-buttons button:hover {
+  background-color: #008000; /* Change button background color on hover */
+}
+
+.control-panel {
+  width: 35%; /* Control panel occupies the remaining width */
+  float: right; /* Float it to the right */
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Optional: Add shadow effect */
+  height: 430px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  background-color: #e6e5e5;
+}
+
+.control-panel button {
+  display: block; /* Each button occupies a whole line */
+  margin-bottom: 10px; /* Space between buttons */
+  /* You can add more button styles here */
+}
+
+
+.search-input {
+  
+  padding: 5px 10px; 
+  margin-right: 10px; 
+  font-size: 16px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  margin: 10px;
+}
+
+.search-button {
+  
+  padding: 5px 15px; 
+  font-size: 16px; 
+  background-color: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  margin: 10px;
+}
+
+.search-button:hover {
+  
+  background-color: #0056b3; 
+}
+
+canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+#areaDropdown {
+  width: 200px; 
+}
+
+
+#conMeanDropdown {
+  width: 200px; 
+}
+
+.card-container {
+  display: flex; 
+}
+
+.card {
+  
+  margin-right: 20px; 
+}
+
+.content-iframe {
+  width: 60%; 
+  height: 560px; 
+  border: none; 
+  border-radius: 15px;
+  background-color: #e6e5e5;
+  padding: 20px;
+  margin: 10px;
+}
+.card-body a {
+  text-decoration: none; 
+  font-size: 10px;
+  
+}
+.card-title {
+  font-size: 24px; 
+  font-family:Arial, Helvetica, sans-serif
+}
+
+#header {
+  
+  text-align: left;
+  background-color: #eeeeeea7;
+  color: white;
+  padding: 10px;
+  font-size: 20px;
+  z-index: 1;
+}
+
+#header h3 a {
+  color: rgb(0, 0, 0)!important; 
+  text-decoration: none !important; 
+  font-family: Helvetica, sans-serif;
+  font-size: 35px;
+}
+
+#header h3 a:hover {
+  text-decoration: underline; 
+}
+
+.top-nav {
+  position: fixed; /* or 'absolute' if no scrolling is needed */
+  top: 0; /* Align to the top */
+  right: 0; /* Align to the right */
+  padding: 10px 20px;
+  background-color: #f5f5f5; /* You can change the background color as needed */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow */
+}
+
+.top-nav a {
+  text-decoration: none;
+  color: #333;
+  margin-left: 10px; /* Space between links */
+  font-size: 16px;
+}
+
+/* Optional: Change link appearance on hover */
+.top-nav a:hover {
+  color: #007bff;
+}
+

@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <title>Leaflet</title>
+
+    <link rel="stylesheet" href="./CSS/map_style.css">
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+   
+
+    <!-- mouse position-->
+    <script src="https://unpkg.com/leaflet-mouse-position@1.2.0/src/L.Control.MousePosition.js"></script>
+    <script src="https://unpkg.com/leaflet-mouse-position@1.2.0/src/L.Control.MousePosition.css"></script>
+
+    <script src="https://unpkg.com/leaflet-better-filelayer@0.1.1/dist/leaflet.betterfilelayer.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-better-filelayer@0.1.1/dist/leaflet.betterfilelayer.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/trafforddatalab/leaflet.reachability@v2.0.1/leaflet.reachability.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/trafforddatalab/leaflet.reachability@v2.0.1/leaflet.reachability.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    
+    <!-- Leaflet Sidebar Plugin -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-sidebar-v2/css/leaflet-sidebar.css" />
+    <script src="https://unpkg.com/leaflet-sidebar-v2/js/leaflet-sidebar.js"></script>
+
+    <!--geoaddress_code-->
+    <link rel="stylesheet" href="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.css" />
+    <script src="https://unpkg.com/@geoapify/leaflet-address-search-plugin@^1/dist/L.Control.GeoapifyAddressSearch.min.js"></script>
+    
+
+    
+
+    
+    <script src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, 
+    maximum-scale=1.0, user-scalable=no"/>
+
+    <link rel="stylesheet" href="https://balladaniel.github.io/leaflet-dataclassification/leaflet-dataclassification.css" />
+    <script src="https://balladaniel.github.io/leaflet-dataclassification/leaflet-dataclassification.js"></script>
+
+    <link rel="stylesheet" href="//unpkg.com/intro.js/minified/introjs.min.css">
+    <script src="//unpkg.com/intro.js/minified/intro.min.js"></script>
+   
+</head>
+
+<body>
+    
+  
+    <div id="header">
+        <h3><a href="https://www.geos.ed.ac.uk/~s2491874/website/website_web/connecting_dots.html">Connectivity.</a></h3>
+        
+    </div>
+   
+    
+        
+    </div>
+    <!-- Create map container -->
+    <div id="map" ></div>
+
+    <div id="download-container" style="display: flex;">
+        
+        
+        <a href="#" id="download-link" style="display: none;">Download GeoJSON</a>
+        
+    </div>
+    
+
+    <!-- Popup container -->
+    <div id="popup"></div>
+
+    <!-- JavaScript code ------------------------------------------------------------------------------------------------------------------>
+    <script>
+        
+
+        // 
+        // 
+        var mapOptions = {
+            center: [55.9323, -3.2833],
+            zoom: 11
+        }
+
+        var map = new L.map('map', mapOptions);
+
+
+// 
+
+
+// 
+
+        //const addressSearchControl = L.control.addressSearch('fe0316c771b34000b216ff4536d635aa', { /* options */ });
+        var marker = null; 
+        const addressSearchControl = L.control.addressSearch('fe0316c771b34000b216ff4536d635aa', {
+        position: 'topleft', // 
+        resultCallback: (address) => {
+            if (marker) {
+            marker.remove();
+            }
+    
+            if (!address) {
+            return;
+            }
+
+            marker = L.marker([address.lat, address.lon]).addTo(map);
+            if (address.bbox && address.bbox.lat1 !== address.bbox.lat2 && address.bbox.lon1 !== address.bbox.lon2) {
+            map.fitBounds([[address.bbox.lat1, address.bbox.lon1], [address.bbox.lat2, address.bbox.lon2]], { padding: [100, 100] });
+            } else {
+            map.setView([address.lat, address.lon], 15);
+            }
+        },
+        suggestionsCallback: (suggestions) => {
+            console.log(suggestions);
+        }
+        });
+        map.addControl(addressSearchControl);
+
+        map.zoomControl.remove();
+        L.control.zoom({
+        position: 'topleft' // 
+        }).addTo(map);
+
+        L.control.scale().addTo(map);
+        L.control.mousePosition({separator:','},{emptystring:'LatLng:'}).addTo(map);
+        L.Control.betterFileLayer().addTo(map);
+        ////////////////////////////////////////////////////////////////////
+        L.control.reachability({
+            // add settings/options here
+            apiKey: '5b3ce3597851110001cf62481f117d36ec47465eabba7df9a762264a',
+            drawButtonContent: '<i class="fa fa-pencil-alt fa-xl"></i>',
+            deleteButtonContent:'<i class="fa fa-trash"></i>',
+            distanceButtonContent:'<i class="fa fa-road"></i>',
+            timeButtonContent:'<i class="fa fa-clock"></i>',
+            travelModeButton1Content:'<i class="fa fa-car fa-xl"></i>',
+            travelModeButton2Content:'<i class="fa fa-bicycle"></i>',
+            travelModeButton3Content:'<i class="fa fa-user"></i>',
+            travelModeButton4Content:'<i class="fa fa-wheelchair"></i>',
+            position:'bottomright',
+            collapsed:false,
+            styleFn:styleIsolines,
+            markerFn: isolinesOrigin,
+            mouseOverFn: highlightIsolines,
+            mouseOutFn: resetIsolines,
+            clickFn: clickIsolines,
+
+        }).addTo(map);
+// Function to return a colour based on the 'Range' value of the reachability polygons
+function getColourByRange(value) {
+    switch (value) {
+        case 5:
+            return '#ff0000';
+        case 10:
+            return '#00ff00';
+        case 15:
+            return '#0000ff';
+        case 20:
+            return '#ffff00';
+        case 25:
+            return '#ff00ff';
+        default:
+            return '#00ffff'
+    }
+}
+
+// Function to style the reachability polygons
+function styleIsolines(feature) {
+    // Get the value of the range property of the feature
+    var rangeVal = feature.properties['Range'];
+    // If the range is based on distance, multiply the value by 10 to match the time range values
+    if (feature.properties['Measure'] == 'distance') rangeVal = rangeVal * 10;
+
+    return {
+        color: getColourByRange(rangeVal),
+        opacity: 0.5,
+        fillOpacity: 0.4
+    };
+}
+// Example function to create a custom marker at the origin of the isoline groups
+function isolinesOrigin(latLng, travelMode, rangeType) {
+    var icons = {
+        'driving-car': '<i class="fa fa-car fa-xl" aria-hidden="true"></i>',
+        'foot-walking': '<i class="fa fa-user" aria-hidden="true"></i>',
+        'wheelchair': '<i class="fa fa-wheelchair" aria-hidden="true"></i>',
+        'cycling-regular': '<i class="fa fa-bicycle" aria-hidden="true"></i>',
+        // 
+        // ...
+    };
+    var selectedIconHtml = icons[travelMode] || '<i class="fa fa-question" aria-hidden="true"></i>'; // 
+    var customIcon = L.divIcon({
+        className: 'my-custom-icon', // 
+        html: selectedIconHtml, // 
+        iconSize: [30, 30], // 
+        iconAnchor: [15, 15] // 
+    });
+
+    
+    return L.marker(latLng, { icon: customIcon });
+                //return L.circleMarker(latLng, { radius: 4, weight: 2, color: '#0073d4', fillColor: '#fff', fillOpacity: 1 });
+            }
+// Example function to style the isoline polygons when the user hovers over them
+function highlightIsolines(e) {
+                // NOTE: as shown in the examples on the Leaflet website, e.target = the layer the user is interacting with
+                var layer = e.target;
+
+                layer.setStyle({
+                    dashArray: '1,13',
+                    weight: 4,
+                    //fillOpacity: '0.5',
+                    opacity: '1'
+                });
+            }
+
+            // Example function to reset the style of the isoline polygons when the user stops hovering over them
+            function resetIsolines(e) {
+                // NOTE: as shown in the examples on the Leaflet website, e.target = the layer the user is interacting with
+                var layer = e.target;
+                var defaultStyle = {
+                opacity: 0.5,
+            };
+            layer.setStyle(defaultStyle);
+            }
+
+            // Example function to display information about an isoline in a popup when the user clicks on it
+            function clickIsolines(e) {
+                // NOTE: as shown in the examples on the Leaflet website, e.target = the layer the user is interacting with
+                var layer = e.target;
+                var props = layer.feature.properties;
+                var popupContent = 'Mode of travel: ' + props['Travel mode'] + '<br />Range: 0 - ' + props['Range'] + ' ' + props['Range units'] + '<br />Area: ' + props['Area'] + ' ' + props['Area units'] + '<br />Population: ' + props['Population'];
+                if (props.hasOwnProperty('Reach factor')) popupContent += '<br />Reach factor: ' + props['Reach factor'];
+                layer.bindPopup(popupContent).openPopup();
+            }
+        //draw tools
+        var drawnItems = new L.FeatureGroup();
+        map.addLayer(drawnItems);
+
+        var drawControl = new L.Control.Draw({
+            position: 'topleft',
+            edit: {
+                featureGroup: drawnItems
+            }
+        });
+
+        map.addControl(drawControl);
+                        
+    
+
+//  Intro.js 
+introJs().setOptions({
+    
+    showProgress: true,
+    
+
+  steps: [
+    {
+      intro: 'Welcome to our species connectivity map!'
+    },
+    {
+      element: document.querySelector('.leaflet-control-zoom'),
+      intro: 'Use this button to zoom in and zoom out.'
+    },
+    {
+      element: document.querySelector('.leaflet-control-better-filelayer'),
+      intro: 'Use this button to upload the geographic data you are interested in, such as points, lines, polygons, etc.'
+    },
+    {
+      element: document.querySelector('.leaflet-draw '),
+      intro: 'Draw and mark points and areas of interest.'
+    },
+    {
+      element: document.querySelector('.geoapify-form'),
+      intro: 'Search for the address you want to locate.'
+           
+    },
+    {
+      element: document.querySelector('.leaflet-right'),
+      intro: 'You can select and switch between the basemap and connectivity basemap you want to display.'
+           
+    },
+    {
+      element: document.querySelector('.reachability-control-settings-container'),
+      intro: 'Try using accessibility tools to test the maximum range that different travel modes can reach, such as which green areas can be reached within a 5-minute walk.'
+           
+    },
+    
+    
+    // 
+  ]
+  
+}).start();
+
+
+        var ba_normalized_cum_currmap = L.tileLayer('https://api.ellipsis-drive.com/v3/path/ca585c10-e1da-4efb-a7d0-c3cab106d1c1/raster/timestamp/0520a163-b5d8-4ff3-9ce4-97b8b862443f/tile/{z}/{x}/{y}?style=ae08fc0f%2dbf29%2d427b%2d8dc4%2dc7c3285d6026&token=epat_DDUxfzmgH9v8oBwZOfqK8jrefCwDLtb8qqFHWketdWdTgaAWrK0an6HQQcNQX1qg');
+        var he_normalized_cum_currmap = L.tileLayer('https://api.ellipsis-drive.com/v3/path/c8964220-2e5a-4e15-a1a4-8dd8c6c47346/raster/timestamp/fd341749-3751-4581-960d-51026295b29e/tile/{z}/{x}/{y}?style=f248906b%2ddbd2%2d473a%2da3cd%2d8d802f002ad8&token=epat_u1l1Jh5FjlDSfSRtuLhc1JfMAW5VcVn0sLyh9I9HNBjTc45Y5oINYIMTmlbNVKXj');
+        var sq_normalized_cum_currmap = L.tileLayer('https://api.ellipsis-drive.com/v3/path/bde9cb19-f384-4a5f-a7b1-d371ca0fce6a/raster/timestamp/bf92ac63-3644-44e8-99b8-c818feb0ea6b/tile/{z}/{x}/{y}?style=195cb8c1%2d7f9e%2d4a35%2d862e%2dd5c9ff62db4e&token=epat_USu6xmDCIiF9tD7C5T8iRXCIfiAkTp9YuZ3n6ME2UeYhy8cFDkVoshNpmqRmKpZe');
+        //var sq_flow_potential = L.tileLayer('https://api.ellipsis-drive.com/v3/path/54e0d47d-cead-4348-bc30-e23e2b883bef/raster/timestamp/d29314dd-ac1c-4fdb-b898-431256b16202/tile/{z}/{x}/{y}?style=07230112%2df611%2d410d%2d8df8%2ded81a916f5b4&token=epat_w7q0zqNQMxOeXwhiC3MJMxBnSP0tHGe3Hxiw9s1W68PA4vZFUcCfV01j6bYE9bt6');
+        //var he_flow_potential = L.tileLayer('https://api.ellipsis-drive.com/v3/path/b9467eee-2b34-4bfa-abf0-f096b1c5f24a/raster/timestamp/c260fec2-0525-4ce5-a332-0a55c145a1e2/tile/{z}/{x}/{y}?style=fad77b82%2dcae3%2d4f5e%2d85c9%2deb8a89172c20&token=epat_ojN6CnmYEYr2GmwJfM9KtynvG8XkTQhKTqlmaITmiFBuTOLfzdPjN31ZNmrjY8A2');
+        //var ba_flow_potential = L.tileLayer('https://api.ellipsis-drive.com/v3/path/25fb73cf-2cc7-464a-be58-1bec19c916c7/raster/timestamp/57905524-11d4-4648-b3ea-053067f1f877/tile/{z}/{x}/{y}?style=97a9427f%2d6bab%2d4b46%2d8695%2d31e94b6f0ed4&token=epat_Bu7i0Tx7GELUiEz6PDeq2IDq4DTPH8jUtYdbas40IUp0jAexYGTCQl1ngjrbittA');
+        var connectivity_main_base = L.tileLayer('https://api.ellipsis-drive.com/v3/path/025420c4-b576-4aa7-8c4c-b69fb36b7106/raster/timestamp/d8dc8608-02e8-4b21-a82d-c0a2467558b4/tile/{z}/{x}/{y}?style=5f7489c0%2d890e%2d4917%2dbe23%2dfdfa58174cc4&token=epat_lZcC9qM9vCvMoCRHkAuEqQ5yQRZOKhgUc8X22C4yabMgCqzSjhvtCTPzbzyEDvpJ');
+        var bikeLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+        var streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png');
+        var esriLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles © Esri - Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+        var googleLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=en', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+        });
+
+        var mapboxLayer = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/dark-v10',
+            accessToken: 'pk.eyJ1IjoibHN5NTYzNzIiLCJhIjoiY2xwMDBvbWt4MDJ1ODJocXU4a3JnbDNrcSJ9.Mtdndp0EsOADZVjoo848LQ'
+        });
+
+        var baseMaps = {
+            "Bike Layer": bikeLayer,
+            "Street Layer": streetLayer,
+            "esriLayer": esriLayer,
+            "googleLayer": googleLayer,
+            "mapboxLayer": mapboxLayer,
+            
+        };
+      
+
+        var overlayMaps = {
+            "Drawn Items": drawnItems,
+            "Edinburgh border data": L.geoJSON(),
+            "All species mean connectivity map":connectivity_main_base,
+            "Badger connectivity map":ba_normalized_cum_currmap,
+            "Hedgehog connectivity map":he_normalized_cum_currmap,
+            "Squirrel connectivity map":sq_normalized_cum_currmap,
+  
+            "Landcover": L.geoJSON(),
+            "All species mean connectivity by datazone": L.geoJSON(),
+            "Hedgehog connectivity by datazone": L.geoJSON(),
+            "Badger connectivity by datazone": L.geoJSON(),
+            "Squirrel connectivity by datazone": L.geoJSON(),
+            "Population density map": L.geoJSON(),
+            "Greenspace map": L.geoJSON(),
+            "Environmental deprivation map":L.geoJSON(),
+            
+        };
+
+        var baseLayersControl = L.control.layers(baseMaps, null, { position: 'topright' }).addTo(map);
+        baseLayersControl.getContainer().setAttribute('id', 'base-layers-control'); 
+        
+        
+        var overLayersControl = L.control.layers(null,overlayMaps, { position: 'topright' }).addTo(map);
+        overLayersControl.getContainer().setAttribute('id', 'over-layers-control'); 
+        
+        mapboxLayer.addTo(map);
+        map.addLayer(overlayMaps["Edinburgh border data"]);
+        
+
+
+        map.on('layeradd', function() {
+  // Bring all overlay layers to the front
+  for (var layer in overlayMaps) {
+    if (map.hasLayer(overlayMaps[layer])) {
+      overlayMaps[layer].bringToFront();
+    }
+  }
+});
+
+map.on(L.Draw.Event.CREATED, function (event) {
+    var layer = event.layer;
+    drawnItems.addLayer(layer);
+    // Get GeoJSON data of the drawn polygon
+    var geoJSONData = layer.toGeoJSON();
+
+    // Convert GeoJSON data to a string
+    var geoJSONString = JSON.stringify(geoJSONData);
+
+    // Create a download link
+    createDownloadLink(geoJSONString);
+});
+
+// Create a download link
+function createDownloadLink(geoJSONString) {
+    var blob = new Blob([geoJSONString], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+
+    var a = document.getElementById('download-link');
+    a.href = url;
+    a.download = "drawn_polygon.geojson"; // Download file name
+    a.style.display = 'block'; // Display the download link, but it won't trigger the download automatically
+}
+
+
+        function addGeoJSONToMap(geojsonUrl, layer, fillColor) {
+            fetch(geojsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: function (feature) {
+                            return {
+                                fillColor: fillColor,  // 
+                                weight: 3,
+                                opacity: 1,
+                                dashArray: '3',
+                                fillOpacity: 0.5
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Add click event to each feature
+                            layer.on('click', function (e) {
+                                showFeatureInfo(feature.properties, e.latlng);
+                           });
+                            //layer.bindTooltip(getTooltipContent(feature.properties), { sticky: true });  
+                        }
+                    }).addTo(layer);
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+        function addGeoJSONToMap5(geojsonUrl, layer) {
+            fetch(geojsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: function (feature) {
+                            // Determine colors based on attribute values of features
+                            var value = feature.properties.popdensity; // Replace the data attribute name
+                            return {
+                                fillColor: getColor5(value),
+                                weight: 0,
+                                opacity: 0.5,
+                                dashArray: '3',
+                                fillOpacity: 0.8
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Add click event to each feature
+                            layer.on('click', function (e) {
+                                showFeatureInfo(feature.properties, e.latlng);
+                            });
+                            layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                        }
+                    }).addTo(layer);
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+        function getColor5(value) {
+            return value < 0.004122 ? '#FF0000' :
+                value < 0.007967 ? '#FFA500' :
+                value < 0.013396 ? '#FFFF00' :
+                value < 0.021415 ? '#0000FF' :
+                '#008000';
+        }
+///greenspace
+function addGeoJSONToMap_greenspace(geojsonUrl, layer, fillColor) {
+            fetch(geojsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: function (feature) {
+                            return {
+                                fillColor: fillColor,  // 
+                                weight: 0,
+                                opacity: 0.5,
+                                dashArray: '3',
+                                fillOpacity: 0.5
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Add click event to each feature
+                            layer.on('click', function (e) {
+                                showFeatureInfo(feature.properties, e.latlng);
+                           });
+                           layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });  
+                        }
+                    }).addTo(layer);
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+        /////all maen 
+        function addGeoJSONToMap_allmean(geojsonUrl, layer) {
+            fetch(geojsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: function (feature) {
+                            // Determine colors based on attribute values of features
+                            var value = feature.properties.all_mean; // Replace the data attribute name
+                            return {
+                                fillColor: getColor_allmean(value),
+                                weight: 0.5,
+                                opacity: 1,
+                                dashArray: '1',
+                                fillOpacity: 1
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Add click event to each feature
+                            layer.on('click', function (e) {
+                                showFeatureInfo(feature.properties, e.latlng);
+                            });
+                            layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                        }
+                    }).addTo(layer);
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+
+function getColor_allmean(value) {
+            return value < 0.6838 ? '#EDF8FB' :
+                value < 0.8888 ? '#B2E2E2' :
+                value < 1.0741 ? '#66C2A4' :
+                value < 1.2618 ? '#2CA25F' :
+                '#006D2C';
+        }
+
+
+//ba_mean
+function addGeoJSONToMap_bamean(geojsonUrl, layer) {
+            fetch(geojsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: function (feature) {
+                            // Determine colors based on attribute values of features
+                            var value = feature.properties.ba_mean; // Replace the data attribute name
+                            return {
+                                fillColor: getColor_bamean(value),
+                                weight: 0.1,
+                                opacity: 1,
+                                dashArray: '1',
+                                fillOpacity: 1
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Add click event to each feature
+                            layer.on('click', function (e) {
+                                showFeatureInfo(feature.properties, e.latlng);
+                            });
+                            layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                        }
+                    }).addTo(layer);
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+        function getColor_bamean(value) {
+            return value < 0.5622 ? '#EDF8FB' :
+                value < 0.7680 ? '#B2E2E2' :
+                value < 0.9939 ? '#66C2A4' :
+                value < 1.2618 ? '#2CA25F' :
+                '#006D2C';
+        }
+
+//he_mean
+function addGeoJSONToMap_hemean(geojsonUrl, layer) {
+            fetch(geojsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: function (feature) {
+                            // Determine colors based on attribute values of features
+                            var value = feature.properties.he_mean; // Replace the data attribute name
+                            return {
+                                fillColor: getColor_hemean(value),
+                                weight: 0.1,
+                                opacity: 1,
+                                dashArray: '1',
+                                fillOpacity: 1
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Add click event to each feature
+                            layer.on('click', function (e) {
+                                showFeatureInfo(feature.properties, e.latlng);
+                            });
+                            layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                        }
+                    }).addTo(layer);
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+        function getColor_hemean(value) {
+            return value < 0.7428 ? '#EDF8FB' :
+                value < 0.9644 ? '#B2E2E2' :
+                value < 1.1442 ? '#66C2A4' :
+                value < 1.3245 ? '#2CA25F' :
+                '#006D2C';
+        }
+
+//sq_mean
+function addGeoJSONToMap_sqmean(geojsonUrl, layer) {
+            fetch(geojsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: function (feature) {
+                            // Determine colors based on attribute values of features
+                            var value = feature.properties.sq_mean; // Replace the data attribute name
+                            return {
+                                fillColor: getColor_sqmean(value),
+                                weight: 0.1,
+                                opacity: 1,
+                                dashArray: '1',
+                                fillOpacity: 1
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Add click event to each feature
+                            layer.on('click', function (e) {
+                                showFeatureInfo(feature.properties, e.latlng);
+                            });
+                            layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                        }
+                    }).addTo(layer);
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+        function getColor_sqmean(value) {
+            return value < 0.7367 ? '#EDF8FB' :
+                value < 1.0128 ? '#B2E2E2' :
+                value < 1.2438 ? '#66C2A4' :
+                value < 1.5101 ? '#2CA25F' :
+                '#006D2C';
+        }
+
+        function addGeoJSONToMap2(geojsonUrl, layer) {
+            fetch(geojsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    L.geoJSON(data, {
+                        style: function (feature) {
+                            // Determine colors based on attribute values of features
+                            var value = feature.properties.gridcode; // Replace the data attribute name
+                            return {
+                                fillColor: getColor2(value),
+                                weight: 0,
+                                opacity: 0.8,
+                                dashArray: '3',
+                                fillOpacity: 1
+                            };
+                        },
+                        onEachFeature: function (feature, layer) {
+                            // Add click event to each feature
+                            layer.on('click', function (e) {
+                                showFeatureInfo(feature.properties, e.latlng);
+                            });
+                        }
+                    
+                    }).addTo(layer);
+                })
+                .catch(error => console.error('Error loading GeoJSON:', error));
+        }
+
+        function getColor2(gridCode) {
+            switch (gridCode) {
+                case 1:
+                    return '#005CE6';  // water
+                case 2:
+                    return '#CCCCCC';  // developed
+                case 3:
+                    return '#38A800';  // grassland
+                case 4:
+                    return '#267300';  // woodland
+                case 5:
+                    return '#FFBEE8';  // bare ground
+                case 6:
+                    return '#DF73FF';
+                case 7:
+                    return '#F5CA7A';
+                default:
+                    return '#F7F8F8';  // unknown codes
+            }
+        }
+//envirnmental deprivation
+function addGeoJSONToMap_bivariate(geojsonUrl, layer) {
+    fetch(geojsonUrl)
+        .then(response => response.json())
+        .then(data => {
+            L.geoJSON(data, {
+                style: function (feature) {
+                    
+                    var normalizedValue1 = feature.properties.all_sum / feature.properties.Shape_Area;
+                    var normalizedValue2 = feature.properties.popdensity / feature.properties.Shape_Area;
+
+                    return {
+                        fillColor: getBivariateColor(normalizedValue1, normalizedValue2),
+                        weight: 0.1,
+                        opacity: 1,
+                        dashArray: '1',
+                        fillOpacity: 1
+                    };
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.on('click', function (e) {
+                        showFeatureInfo(feature.properties, e.latlng);
+                    });
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                }
+            }).addTo(layer);
+        })
+        .catch(error => console.error('Error loading GeoJSON:', error));
+}
+
+function getBivariateColor(value1, value2) {
+    
+    var index1 = getIndex1(value1);
+    var index2 = getIndex2(value2);
+
+    
+    return colorMatrix[index1][index2];
+}
+
+
+const colorMatrix = [
+    ['#DE50A6', '#833598', '#2B1A8A'],
+    ['#E39BCB', '#9080BE', '#9080BE'],
+    ['#E9E6F1', '#9CCAE1', '#4FADCF']
+];
+
+
+function getIndex1(value) {
+    
+    if (value < 0.0345) return 0;
+    if (value < 0.0410) return 1;
+    return 2;
+}
+function getIndex2(value) {
+    
+    if (value < 1.83e-8) return 0;
+    if (value < 4.88e-8) return 1;
+    return 2;
+}
+
+
+
+        var geojsonUrl1 = 'data/ed.geojson';
+        addGeoJSONToMap(geojsonUrl1, overlayMaps["Edinburgh border data"], 'blue');
+
+        var geojsonUrl2 = 'data/landcover.geojson';
+        addGeoJSONToMap2(geojsonUrl2, overlayMaps["Landcover"]);
+
+        var geojsonUrl3 = 'data/greenspace.geojson';
+        addGeoJSONToMap_greenspace(geojsonUrl3, overlayMaps["Greenspace map"], 'green');
+
+        var geojsonUrl4 = 'data/connectivity_dz.geojson';
+        addGeoJSONToMap_allmean(geojsonUrl4, overlayMaps["All species mean connectivity by datazone"]);
+        var geojsonUrl5 = 'data/connectivity_dz.geojson';
+        addGeoJSONToMap5(geojsonUrl5, overlayMaps["Population density map"]);
+
+        var geojsonUrl6 = 'data/connectivity_dz.geojson';
+        addGeoJSONToMap_hemean(geojsonUrl6, overlayMaps["Hedgehog connectivity by datazone"]);
+
+        var geojsonUrl7 = 'data/connectivity_dz.geojson';
+        addGeoJSONToMap_bamean(geojsonUrl7, overlayMaps["Badger connectivity by datazone"]);
+
+        var geojsonUrl8 = 'data/connectivity_dz.geojson';
+        addGeoJSONToMap_sqmean(geojsonUrl8, overlayMaps["Squirrel connectivity by datazone"]);
+
+        var geojsonUrl9 = 'data/connectivity_dz.geojson';
+        addGeoJSONToMap_bivariate(geojsonUrl8, overlayMaps["Environmental deprivation map"]);
+
+
+
+
+        function highlightFeature(e) {
+            var layer = e.target;
+            layer.setStyle({
+                weight: 5,
+                color: '#666',
+                dashArray: '',
+                //fillOpacity: 0.7
+            });
+            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+            }
+        }
+
+// Reset highlighting
+        function resetHighlight(e) {
+            var layer = e.target;
+            layer.setStyle({
+                weight: 0.1,
+                //opacity: 
+                dashArray: '1',
+                //fillOpacity: 1
+            });
+        }
+//legend parts/////////////////////////////////////////////////////////////////////////////////////////////////////////
+var currentLegend = L.control({position: 'bottomleft'});  
+    currentLegend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend');
+    
+    return div;
+};
+
+currentLegend.addTo(map);
+
+function updateLandcoverLegend() {
+
+var legendContent =
+
+        '<h4>Landcover</h4>'+
+        '<i style="background: #005CE6"></i> Water<br>'+
+        '<i style="background: #CCCCCC"></i> developed <br>'+
+        '<i style="background: #38A800"></i> grassland<br>'+
+        '<i style="background: #267300"></i> woodland<br>'+
+        '<i style="background: #FFBEE8"></i> bare ground<br>'+
+        '<i style="background: #DF73FF"></i> heather<br>'+
+        '<i style="background: #F5CA7A"></i> agriculture<br>';
+       
+        
+        return legendContent;
+    };
+function updatepopDzLegend() {
+    var legendContent =
+        '<h4>Population density</h4>'+
+        '<div class="legend-container">' +
+        '<div class="legend-gradient-pop"></div>' + 
+        '<div class="legend-labels">' +
+        '<span>High</span>' +
+        '<span>Low</span>' +
+        
+        '</div>' +
+        '</div>';
+    return legendContent;
+}
+
+
+
+    function updatecon_averageLegend() {
+
+        var legendContent =
+        '<h4>All species mean connectivity map</h4>'+
+        '<div class="legend-container">' +
+        '<div class="legend-gradient"></div>' + 
+        '<div class="legend-labels">' +
+        '<span>High</span>' +
+        '<span>Low</span>' +
+        
+        '</div>' +
+        '</div>';
+    return legendContent;
+            };
+    
+    
+    function update_ba_con_Legend() {
+
+        var legendContent =
+        '<h4>Badger connectivity map</h4>'+
+        '<div class="legend-container">' +
+        '<div class="legend-gradient"></div>' + 
+        '<div class="legend-labels">' +
+        '<span>High</span>' +
+        '<span>Low</span>' +
+        
+        '</div>' +
+        '</div>';
+    return legendContent;
+            };
+    function update_he_con_Legend() {
+
+        var legendContent =
+        '<h4>Hedgehog connectivity map</h4>'+
+        '<div class="legend-container">' +
+        '<div class="legend-gradient"></div>' + 
+        '<div class="legend-labels">' +
+        '<span>High</span>' +
+        '<span>Low</span>' +
+        
+        '</div>' +
+        '</div>';
+    return legendContent;
+            };
+        
+    function update_sq_con_Legend() {
+
+        var legendContent =
+        '<h4>Red squirrel connectivity map</h4>'+
+        '<div class="legend-container">' +
+        '<div class="legend-gradient"></div>' + 
+        '<div class="legend-labels">' +
+        '<span>High</span>' +
+        '<span>Low</span>' +
+        
+        '</div>' +
+        '</div>';
+    return legendContent;
+            };
+
+    function update_all_meanLegend() {
+
+var legendContent =
+    
+    '<h4>All species mean connectivity by dtazone</h4>'+
+        '<div class="legend-container">' +
+        '<div class="legend-gradient-green"></div>' + 
+        '<div class="legend-labels">' +
+        '<span>High</span>' +
+        '<span>Low</span>' +
+        
+        '</div>' +
+        '</div>';
+        return legendContent;
+    };
+    function update_he_dzLegend() {
+
+var legendContent =
+   
+        '<h4>Hedgehog connectivity by dtazone</h4>'+
+        '<div class="legend-container">' +
+        '<div class="legend-gradient-green"></div>' + 
+        '<div class="legend-labels">' +
+        '<span>High</span>' +
+        '<span>Low</span>' +
+        
+        '</div>' +
+        '</div>';
+        return legendContent;
+    };
+    function update_ba_dzLegend() {
+
+var legendContent =
+    
+        '<h4>Badger connectivity by dtazone</h4>'+
+        '<div class="legend-container">' +
+        '<div class="legend-gradient-green"></div>' + 
+        '<div class="legend-labels">' +
+        '<span>High</span>' +
+        '<span>Low</span>' +
+        
+        '</div>' +
+        '</div>';
+        return legendContent;
+    };
+    function update_sq_dzLegend() {
+
+var legendContent =
+    
+        '<h4>Squirrel connectivity by dtazone</h4>'+
+        '<div class="legend-container">' +
+        '<div class="legend-gradient-green"></div>' + 
+        '<div class="legend-labels">' +
+        '<span>High</span>' +
+        '<span>Low</span>' +
+        
+        '</div>' +
+        '</div>';
+        return legendContent;
+    };
+//envirnmental deprivation
+function update_deprivationLegend() {
+    
+    const imageURL = 'IMG/1.png';
+
+    var legendContent = 
+        '<div class="legend-container">' +
+        '<img src="' + imageURL + '" alt="Legend Image" style="max-width: 230px; height: auto;">' +
+        '</div>';
+
+    return legendContent;
+}
+
+    // Activate layer list
+var activeLayers = {};
+
+// Layer add event
+map.on('overlayadd', function(eventLayer) {
+    activeLayers[eventLayer.name] = true; // Mark as active
+    updateLegend(); // Update the legend
+});
+
+// Layer remove event
+map.on('overlayremove', function(eventLayer) {
+    delete activeLayers[eventLayer.name]; // Mark as not active
+    updateLegend(); // Update the legend
+});
+
+
+// Function to update legend content
+function updateLegend() {
+    var lastActiveLayer = Object.keys(activeLayers).pop(); //Get the last activated layer name
+    if (lastActiveLayer) {
+        switch (lastActiveLayer) {
+            case 'Landcover':
+                currentLegend.getContainer().innerHTML = updateLandcoverLegend();
+                break;
+            case 'Population density map':
+                currentLegend.getContainer().innerHTML = updatepopDzLegend();
+                break;
+            case 'All species mean connectivity map':
+                currentLegend.getContainer().innerHTML = updatecon_averageLegend();
+                break;
+            case 'Badger connectivity map':
+                currentLegend.getContainer().innerHTML = update_ba_con_Legend();
+                break;
+            case 'Hedgehog connectivity map':
+                currentLegend.getContainer().innerHTML = update_he_con_Legend();
+                break;
+            case 'Squirrel connectivity map':
+                currentLegend.getContainer().innerHTML = update_sq_con_Legend();
+                break;
+            case 'All species mean connectivity by datazone':
+                currentLegend.getContainer().innerHTML = update_all_meanLegend();
+                break;
+            case 'Hedgehog connectivity by datazone':
+                currentLegend.getContainer().innerHTML = update_he_dzLegend();
+                break;
+            case 'Badger connectivity by datazone':
+                currentLegend.getContainer().innerHTML = update_ba_dzLegend();
+                break;
+            case 'Squirrel connectivity by datazone':
+                currentLegend.getContainer().innerHTML = update_sq_dzLegend();
+                break;
+            case 'Environmental deprivation map':
+                currentLegend.getContainer().innerHTML = update_deprivationLegend();
+                break;    
+            
+                default:
+                currentLegend.getContainer().innerHTML = '';
+        }
+    } else {
+        currentLegend.getContainer().innerHTML = ''; // Clear legend when all layers are inactive
+    }
+}
+
+
+// Function to show feature information 
+    function showFeatureInfo(properties, latlng) {
+    // Define the fixed size for the popup
+    var popupWidth = 300;
+    var popupHeight = 300;
+
+    // Calculate the offset to center the popup
+    var offsetX = -popupWidth / 2;
+    var offsetY = -popupHeight / 2;
+
+    var popupContent = "<div style='width:" + popupWidth + "px; height:" + popupHeight + "px; padding:10px;background-color:white; border:1px solid #ccc;'>";
+    popupContent += "<h2>Feature Information</h2>";
+    
+    for (var key in properties) {
+        if (properties.hasOwnProperty(key)) {
+            popupContent += "<p><strong>" + key + ":</strong> " + properties[key] + "</p>";
+        }
+    }
+    
+    popupContent += "</div>";
+
+    var popup = L.popup({
+        maxWidth: popupWidth,
+        maxHeight: popupHeight
+    })
+        .setLatLng(latlng)
+        .setContent(popupContent)
+        .openOn(map);
+}
+
+// Example usage:
+// Assume you have a layer with click event
+yourLayer.on('click', function (event) {
+    var properties = event.layer.feature.properties;
+    var latlng = event.latlng;
+    showFeatureInfo(properties, latlng);
+});
+
+
+        function getTooltipContent(properties) {
+            var tooltipContent = "<h2>Feature Information</h2>";
+            for (var key in properties) {
+                if (properties.hasOwnProperty(key)) {
+                    tooltipContent += "<p><strong>" + key + ":</strong> " + properties[key] + "</p>";
+                }
+            }
+            return tooltipContent;
+        }
+    
+</script>
+<!----chart part-------------------------------------------->
+<div class="chart-buttons">
+    <button onclick="showChart('landcover')">Landcover Chart</button>
+    <button onclick="showChart('greenspace')">Greenspace Chart</button>
+    <button onclick="showChart('populationdensity')">Population Density Chart</button>
+    <button onclick="showChart('connectivity_mean')">Connectivity Mean Chart</button>
+    
+</div>
+<div class="chart-container">
+    <div class="small-container">
+        <div class="landcover">
+            <canvas id="landcover"></canvas>
+        </div>
+    </div>
+    <div class="small-container">
+        <div class="greenspace">
+            <canvas id="greenspace"></canvas>
+        </div>
+    </div>
+    <div class="small-container">
+        <div class="populationdensity ">
+            <canvas id="populationdensity"></canvas>
+        </div>
+    </div>
+    <div class="small-container">
+        <div class="connectivity_mean">
+            <canvas id="connectivity_mean"></canvas>
+        </div>
+    </div>
+    <div class="control-panel">
+        
+        
+    </div>
+</div>
+
+
+<script>
+function showChart(chartId) {
+    
+    let charts = document.querySelectorAll('.small-container');
+    
+    charts.forEach(chart => chart.style.display = 'none');
+
+    
+    let selectedChartCanvas = document.getElementById(chartId);
+    if (selectedChartCanvas) {
+        let selectedChartContainer = selectedChartCanvas.parentElement.parentElement;
+        selectedChartContainer.style.display = 'block';
+    }
+    updateControlPanel(chartId);
+}
+
+
+window.onload = function() {
+    showChart('connectivity_mean'); 
+};
+function updateControlPanel(chartId) {
+    const controlPanel = document.querySelector('.control-panel');
+    controlPanel.innerHTML = ''; 
+
+    let buttonsHtml = '';
+    switch(chartId) {
+        case 'landcover':
+            
+            
+            break;
+        case 'greenspace':
+            
+            
+            break;
+       
+        case 'populationdensity':
+           
+            buttonsHtml = `
+                <div class="search-area">
+                    <p>Check the population density of your area</p>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Enter area name...">
+                    <select id="areaDropdown" onchange="updateSearchInputWithSelectedArea()">
+                        <option value="">--choose an area--</option>
+                    </select>
+                    <button onclick="searchArea()" class="search-button">Search</button>
+                    <button onclick="searchArea()" class="search-button">Population Density: Highest and Lowest 10</button>
+                </div>`;
+            break;
+        case 'connectivity_mean':
+            buttonsHtml = `
+                <div class="search-area">
+                    <p>Check the connectivity  of your area</p>
+                    <input type="text" id="searchInputConMean" class="search-input" placeholder="Enter area name...">
+                    <select id="conMeanDropdown" onchange="updateSearchInputWithSelectedConMean()">
+                        <option value="">--choose an area--</option>
+                    </select>
+                    <button onclick="searchConMeanArea()" class="search-button">Search</button>
+                    <button onclick="searchConMeanArea()" class="search-button">Conectivity: Highest and Lowest 10</button>
+                    <br></br>
+                    <p>Choose datasets to compare on double Y axes</p>
+                    <select id="dataset1">
+                    <!-- 填充所有可用数据集的选项 -->
+                    <option value="popdensity">Population Density</option>
+                    <option value="connectivity">Mean Connectivity Index</option>
+                    <!-- 添加其他可能的数据集选项 -->
+                </select>
+
+                <select id="dataset2">
+                    <!-- 填充所有可用数据集的选项 -->
+                    <option value="connectivity">Mean Connectivity Index</option>
+                    <option value="popdensity">Population Density</option>
+                    <!-- 添加其他可能的数据集选项 -->
+                </select>
+
+                <button onclick="createDoubleYAxisChart()"class="search-button">Create Double Y Axis Chart</button>
+                
+
+                </div>`;
+            break;
+        
+    }
+
+    controlPanel.innerHTML = buttonsHtml; 
+    if(chartId === 'connectivity_mean') {
+        const dropdown = document.getElementById('conMeanDropdown');
+        dropdown.addEventListener('focus', populateConMeanDropdownOnce);
+    }
+    
+    const dropdown = document.getElementById('areaDropdown');
+    dropdown.addEventListener('focus', populateAreaDropdownOnce);
+    
+}
+
+function populateConMeanDropdownOnce() {
+    const dropdown = document.getElementById('conMeanDropdown');
+    if (dropdown.length === 1) { 
+        const areaNames = geojsonData_con_mean.features.map(feature => feature.properties.Name);
+        areaNames.forEach(area => {
+            const option = document.createElement('option');
+            option.value = option.text = area;
+            dropdown.add(option);
+        });
+        dropdown.removeEventListener('focus', populateConMeanDropdownOnce); 
+    }
+}
+
+
+function updateSearchInputWithSelectedConMean() {
+    const dropdown = document.getElementById('conMeanDropdown');
+    const searchInput = document.getElementById('searchInputConMean');
+    searchInput.value = dropdown.value;
+}
+
+function populateAreaDropdownOnce() {
+    const dropdown = document.getElementById('areaDropdown');
+    
+    if (dropdown.length === 1) { 
+        const areaNames = geojsonData_population.features.map(feature => feature.properties.Name);
+
+        areaNames.forEach(area => {
+            const option = document.createElement('option');
+            option.value = option.text = area;
+            dropdown.add(option);
+        });
+    }
+   
+    dropdown.removeEventListener('focus', populateAreaDropdownOnce);
+}
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 256); 
+    const g = Math.floor(Math.random() * 256); 
+    const b = Math.floor(Math.random() * 256); 
+    return `rgb(${r}, ${g}, ${b})`; 
+}
+
+
+
+function updateSearchInputWithSelectedArea() {
+    const dropdown = document.getElementById('areaDropdown');
+    const searchInput = document.getElementById('searchInput');
+    searchInput.value = dropdown.value;
+}
+//landcover
+    let geojsonData_landcover;
+
+fetch('./data/landcover.geojson')
+.then(response => response.json())
+.then(data => {
+    geojsonData_landcover = data;
+    const chartData = extractDataForChart(geojsonData_landcover);
+    createChart_landcover(chartData);
+})
+.catch(error => console.error('Error loading the GeoJSON data:', error));
+function extractDataForChart(geojsonData_landcover) {
+const areaByName = {};
+
+geojsonData_landcover.features.forEach(feature => {
+    const name = feature.properties.Name; 
+    const area = feature.properties.Shape_Area; 
+
+    if (areaByName[name]) {
+        areaByName[name] += area; 
+    } else {
+        areaByName[name] = area; 
+    }
+});
+
+return {
+    labels: Object.keys(areaByName),
+    values: Object.values(areaByName)
+};
+}
+const colorMapping_landcover = {
+"water": "#005CE6",
+"grassland": "#38A800",
+"woodland": "#267300",
+"developed": "#CCCCCC",
+"bare ground": "#FFBEE8",
+"heather": "#DF73FF",
+"agriculture": "#DF73FF",
+}
+
+function createChart_landcover(chartData) {
+const colors = chartData.labels.map(label => colorMapping_landcover[label] || "#d3d3d3"); 
+const convertedValues = chartData.values.map(value => value / 1000000);
+const ctx = document.getElementById('landcover').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: chartData.labels,
+        datasets: [{
+            label: 'Area(km²)',
+            data: convertedValues,
+            backgroundColor: colors // 
+        }]
+    },
+    options: {
+        title: {
+            display: true,
+            text: 'Landcover',
+            fontSize: 18, // 
+            position: 'bottom' //
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+}
+//greenspace
+let geojsonData_greenspace;
+
+fetch('./data/greenspace.geojson')
+.then(response => response.json())
+.then(data => {
+    geojsonData_greenspace = data;
+    const chartData = extractDataForPieChart(geojsonData_greenspace);
+    createPieChart(chartData);
+})
+.catch(error => console.error('Error loading the Green Space GeoJSON data:', error));
+function extractDataForPieChart(geojsonData_greenspace) {
+    const countByFunction = {};
+
+    geojsonData_greenspace.features.forEach(feature => {
+        const functionName = feature.properties.function; 
+
+        if (countByFunction[functionName]) {
+            countByFunction[functionName] += 1; 
+        } else {
+            countByFunction[functionName] = 1; 
+        }
+    });
+
+    return {
+        labels: Object.keys(countByFunction),
+        values: Object.values(countByFunction)
+    };
+}
+function createPieChart(chartData) {
+    const colors = chartData.labels.map(() => getRandomColor());
+
+    const ctx = document.getElementById('greenspace').getContext('2d');
+    new Chart(ctx, {
+        type: 'pie', 
+        data: {
+            labels: chartData.labels,
+            datasets: [{
+                label: 'Number of Green Spaces',
+                data: chartData.values,
+                backgroundColor: colors,
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Green Space Functions',
+                fontSize: 18,
+                position: 'bottom'
+            
+            }
+        },
+        scales: {
+                
+                
+            }
+    });
+}
+
+
+///popdensity
+let geojsonData_population;
+let currentChart_pop; 
+
+fetch('./data/connectivity_dz.geojson')
+.then(response => response.json())
+.then(data => {
+    geojsonData_population = data;
+    const chartData = extractDataForBarChart(geojsonData_population);
+    createBarChart(chartData);
+
+})
+.catch(error => console.error('Error loading the population density data:', error));
+
+function searchArea() {
+    const searchInput = document.getElementById('searchInput').value;
+    const filteredData = extractDataForBarChart(geojsonData_population, searchInput);
+    
+    createBarChart(filteredData);
+   
+    document.getElementById('searchInput').value = '';
+}
+
+function extractDataForBarChart(geojsonData_population, searchQuery = '') {
+    let densityData = geojsonData_population.features.map(feature => {
+        return {
+            name: feature.properties.Name,
+            density: feature.properties.popdensity
+        };
+    });
+
+    if (searchQuery) {
+        densityData = densityData.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    } else {
+        densityData.sort((a, b) => b.density - a.density);
+        densityData = densityData.slice(0, 10).concat(densityData.slice(-10));
+    }
+
+    return {
+        labels: densityData.map(item => item.name),
+        values: densityData.map(item => item.density)
+    };
+}
+
+function createBarChart(chartData) {
+    const ctx = document.getElementById('populationdensity').getContext('2d');
+    
+   
+    if (currentChart_pop) {
+        currentChart_pop.destroy();
+    }
+
+    
+    currentChart_pop = new Chart(ctx, {
+        type: 'bar', 
+        data: {
+            labels: chartData.labels,
+            datasets: [{
+                label: 'Population Density',
+                data: chartData.values,
+                backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                barThickness: chartData.labels.length === 1 ? 50 : 'flex',
+                minBarLength: 30, 
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            indexAxis: 'y', 
+            title: {
+                display: true,
+                text: 'Population density ',
+                fontSize: 18,
+                position:'bottom'
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Area'
+
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Population density'
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+////connectivity mean
+let geojsonData_con_mean;
+let currentConMeanChart; 
+
+fetch('./data/connectivity_dz.geojson')
+.then(response => response.json())
+.then(data => {
+    geojsonData_con_mean = data;
+    const chartData = extractDataForBarChart1(geojsonData_con_mean);
+    createBarChart1(chartData);
+
+})
+.catch(error => console.error('Error loading the connectivity mean data:', error));
+
+function searchConMeanArea() {
+    const searchInput = document.getElementById('searchInputConMean').value;
+    const filteredData = extractDataForBarChart1(geojsonData_con_mean, searchInput);
+    createBarChart1(filteredData);
+    
+    document.getElementById('searchInputConMean').value = '';
+}
+
+function extractDataForBarChart1(geojsonData_con_mean, searchQuery = '') {
+    let connectivityData = geojsonData_con_mean.features.map(feature => {
+        return {
+            name: feature.properties.Name, 
+            connectivity: feature.properties.all_mean 
+        };
+    });
+
+    if (searchQuery) {
+        connectivityData = connectivityData.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    } else {
+        connectivityData.sort((a, b) => b.connectivity - a.connectivity);
+        connectivityData = connectivityData.slice(0, 10).concat(connectivityData.slice(-10));
+    }
+
+    return {
+        labels: connectivityData.map(item => item.name),
+        values: connectivityData.map(item => item.connectivity)
+    };
+}
+
+function createBarChart1(chartData) {
+    const ctx = document.getElementById('connectivity_mean').getContext('2d');
+    
+    
+    if (currentConMeanChart) {
+        currentConMeanChart.destroy();
+    }
+
+    
+    currentConMeanChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: chartData.labels,
+            datasets: [{
+                label: 'Mean Connectivity Index',
+                data: chartData.values,
+                backgroundColor: chartData.values.map(value => getColorForValue(value)),
+                barThickness: chartData.labels.length === 1 ? 50 : 'flex',
+                minBarLength: 30,
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            indexAxis: 'y', 
+            title: {
+                display: true,
+                text: 'Mean Connectivity Index by Area',
+                fontSize: 18,
+                position:'bottom'
+            },
+            scales: {
+                x: {
+                    beginAtZero: true, //
+                    title: {
+                        display: true,
+                        text: 'Mean Connectivity Index'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Area'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function getColorForValue(value) {
+    const maxVal = 1.7;
+    const greenIntensity = Math.floor((value / maxVal) * 255);
+    return `rgb(0, ${greenIntensity}, 0)`;
+}
+
+////
+
+
+function createDoubleYAxisChart() {
+    const selectedDataset1 = document.getElementById('dataset1').value;
+    const selectedDataset2 = document.getElementById('dataset2').value;
+
+    
+    const data1 = extractDataForBarChart(geojsonData_population);
+    const data2 = extractDataForBarChart1(geojsonData_con_mean); 
+
+   
+    const ctx = document.getElementById('connectivity_mean').getContext('2d');
+
+   
+    if (currentConMeanChart) {
+        currentConMeanChart.destroy();
+    }
+
+    
+    currentConMeanChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data1.labels, // 
+            datasets: [{
+                label: 'Population Density',
+                data: data1.values,
+                backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                yAxisID: 'y-axis-1',
+            }, {
+                label: 'Mean Connectivity Index',
+                data: data2.values,
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                yAxisID: 'y-axis-2',
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    id: 'y-axis-1',
+                    type: 'linear',
+                    position: 'left',
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Population Density'
+                    }
+                }, {
+                    id: 'y-axis-2',
+                    type: 'linear',
+                    position: 'right',
+                    gridLines: {
+                        display: false
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Mean Connectivity Index'
+                    }
+                }],
+                xAxes: [{
+                    stacked: true, // 
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Area'
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                display: true
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false
+            }
+        }
+    });
+}
+function searchAndUpdateDoubleYAxisChart() {
+    const searchInput = document.getElementById('searchInput').value;
+    const selectedDataset1 = document.getElementById('dataset1').value;
+    const selectedDataset2 = document.getElementById('dataset2').value;
+
+   
+    const filteredData1 = extractDataForBarChart(geojsonData_population, searchInput, selectedDataset1);
+    const filteredData2 = extractDataForBarChart1(geojsonData_con_mean, searchInput, selectedDataset2);
+
+    
+    createDoubleYAxisChart(filteredData1, filteredData2);
+}
+
+
+</script>
+<!----cardpart--> 
+<div class="card-container">
+    <div class="card">
+      <img src="./IMG/database.jpg" alt="Quaco Lighthouse" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">Learn more about connectivity database</h5>
+        <a href="https://www.geos.ed.ac.uk/~s2491874/cgi-bin/database.py" target="iframe-content">
+            <h1>Browse the entire database</h1>
+        </a>
+        <a href="https://www.geos.ed.ac.uk/~s2491874/cgi-bin/database_query.py" target="iframe-content" class="database_link">
+            <h1>Query the connectivity database</h1>
+        </a>
+      </div>
+    </div>
+    <iframe name="iframe-content" class="content-iframe"></iframe>
+</div>
+
+   
+  </div>
+ 
+ 
+    
+</div>
+<!--AI-->
+<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+      <df-messenger
+  project-id="gold-doodad-411202"
+  agent-id="c5aa8244-764d-46a2-8eac-60ba5eb3908a"
+  language-code="en">
+  <df-messenger-chat-bubble
+   chat-title="little edinburgh">
+  </df-messenger-chat-bubble>
+</df-messenger>
+<style>
+  df-messenger {
+    z-index: 999;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+  }
+</style>  
+<!--AI-->
+
+
+
+</html>

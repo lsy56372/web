@@ -1,0 +1,135 @@
+#page-title {
+    position: absolute;
+    top: 50px;  /* Adjust as needed */
+    left: 50px; /* Adjust as needed */
+    font-size: 35px; /* Adjust as needed */
+    font-family: Helvetica, sans-serif; /* Choose your preferred font */
+    /* text-decoration: underline; Underlines the text */
+}
+
+h1 a {
+    text-decoration: none; /* Removes the underline from the link */
+    color: inherit; /* Inherits the text color from the parent element */
+}
+
+h1 a:hover {
+    text-decoration: underline; /* Optional: underline on hover for better UX */
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.top-nav {
+    position: fixed; /* or 'absolute' if no scrolling is needed */
+    top: 0; /* Align to the top */
+    right: 0; /* Align to the right */
+    padding: 10px 20px;
+    background-color: #f5f5f5; /* You can change the background color as needed */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow */
+}
+
+.top-nav a {
+    text-decoration: none;
+    color: #333;
+    margin-left: 10px; /* Space between links */
+    font-size: 16px;
+}
+
+/* Optional: Change link appearance on hover */
+.top-nav a:hover {
+    color: #007bff;
+}
+
+.guide-section {
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: start; /* Align items to the top */
+    padding: 50px;
+}
+
+.guide-info {
+    flex: 1; /* Take up half of the available space */
+    padding: 20px;
+    margin-top: 250px;
+    border: 1px solid #ddd;
+    max-width: 50%; /* Adjust this as needed */
+    border-radius: 8px;
+    background-color: whitesmoke;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+}
+
+.guide-pdf {
+    flex: 1; /* Take up half of the available space */
+    padding: 20px;
+}
+
+.guide-pdf iframe {
+    width: 100%; /* Full width of the container */
+    height: 600px; /* Fixed height, adjust as needed */
+    border: 1px solid #ddd;
+}
+
+@media (max-width: 800px) {
+    .guide-section {
+        flex-direction: column;
+    }
+
+    .guide-pdf iframe {
+        height: 400px; /* Adjust for smaller screens */
+    }
+}
+
+.network {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Viewport width */
+    height: 100vh; /* Viewport height */
+    z-index: -1;
+    pointer-events: none; /* Allows clicks to pass through the canvas */
+}
+
+h2 {
+    color: #555;
+}
+
+.logo1 {
+    position: absolute;
+    bottom: 75px;
+    left: 50px;
+    max-width: 150px; /* Control the size of the logos */
+    margin: 10px; /* Add space between logos */
+    vertical-align: middle; /* Align logos vertically */
+    height: auto; /* Keeps the aspect ratio intact */
+}
+
+.logo2 {
+    position: absolute;
+    bottom: 85px;
+    left: 250px;
+    max-width: 150px; /* Control the size of the logos */
+    margin: 10px; /* Add space between logos */
+    vertical-align: middle; /* Align logos vertically */
+    height: auto; /* Keeps the aspect ratio intact */
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: transparent;
+    color: #333;
+    font-size: 20px;
+    bottom: 10;
+    width: 100%;
+    z-index: 100;
+}
+
+footer p {
+    margin: 0;
+}

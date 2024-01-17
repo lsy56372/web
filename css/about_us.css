@@ -1,0 +1,218 @@
+#page-title {
+    position: absolute;
+    top: 50px;  /* Adjust as needed */
+    left: 50px; /* Adjust as needed */
+    font-size: 35px; /* Adjust as needed */
+    font-family: Helvetica, sans-serif; /* Choose your preferred font */
+    /* text-decoration: underline; Underlines the text */
+}
+h1 a {
+    text-decoration: none; /* Removes the underline from the link */
+    color: inherit; /* Inherits the text color from the parent element */
+}
+
+h1 a:hover {
+    text-decoration: underline; /* Optional: underline on hover for better UX */
+}
+body, html {
+    background-color: transparent;
+    color: #333;
+    overflow-x: hidden;
+}
+
+.top-nav {
+    position: fixed; /* or 'absolute' if no scrolling is needed */
+    top: 0; /* Align to the top */
+    right: 0; /* Align to the right */
+    padding: 10px 20px;
+    background-color: #f5f5f5; /* You can change the background color as needed */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: adds a subtle shadow */
+}
+
+.top-nav a {
+    text-decoration: none;
+    color: #333;
+    margin-left: 10px; /* Space between links */
+    font-size: 16px;
+}
+
+/* Optional: Change link appearance on hover */
+.top-nav a:hover {
+    color: #007bff;
+}
+
+.background {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    margin-top: 200px; /* Adjust to reduce space from the top */
+    margin-bottom: 0px; /* Adjust to reduce space to the next section */
+    margin-left: auto; /* Centering the box */
+    margin-right: auto; /* Centering the box */
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ddd;
+    max-width: 85%; /* Adjust this as needed */
+    border-radius: 8px;
+    background-color: whitesmoke;
+}
+
+.team-section {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 100px;
+}
+
+.team-section > div {
+    flex: 1;
+}
+
+.team-photo img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.team-info {
+    text-align: left;
+    margin: 0;
+    padding: 10px;
+    max-width: 50%;
+    border-radius: 8px;
+}
+
+.team-info a {
+    color: inherit; /* Inherits the color from the parent element */
+    text-decoration: none; /* Removes the underline */
+}
+.team-info a:hover, .team-info a:focus {
+    color: #005691; /* Darker shade for hover effect */
+    text-decoration: underline; /* Underline on hover */
+    /* Alternatively, you could use a slight scale transform for a subtle effect */
+    transform: scale(1.05);
+}
+
+.goals > div {
+    flex: 1;
+}
+
+.goals {
+    display: flex;
+    justify-content: space-around;
+    align-items: top;
+    padding: 50px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.objectives ul {
+    text-align: left; /* Left aligns the content of the list */
+    padding-left: 20px; /* Adds indentation to the list */
+    display: inline-block; /* Allows the list to respect the text-align of its parent */
+    text-align: start; /* Ensures the text within the list is aligned to the start */
+    margin-top: 0; /* Adjusts the top margin */
+}
+
+.aim, .objectives {
+    text-align: center;
+    margin: 0 10px; /* Adds 10px margin to the left and right */
+    padding: 10px;
+    border: 1px solid #ddd;
+    max-width: 50%; /* Adjust this as needed */
+    border-radius: 8px;
+    background-color: whitesmoke;
+}
+
+/* Adjustments for responsive design */
+@media (max-width: 800px) {
+    .team-image, .team {
+        flex-basis: 100%; /* Stacks elements on smaller screens */
+        max-width: 100%; /* Allows each element to expand fully */
+        padding: 10px 0; /*Adjust padding for smaller screens */
+    }
+} 
+
+h2 {
+    color: #555;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+p {
+    line-height: 1.6;
+}
+
+.circle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: black;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.network {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Viewport width */
+    height: 100vh; /* Viewport height */
+    z-index: -1;
+    pointer-events: none; /* Allows clicks to pass through the canvas */
+}
+
+.documentation {
+    display: flex; /* Use flexbox */
+    justify-content: flex-start; /* Align items to the start (left) */
+    text-align: center;
+    left: 20%;
+    bottom: 0;
+    padding: 20px;
+    background-color: lightgray; /* Adjust the background as needed */
+    border-top-right-radius: 10px; /* Optional rounded corners */
+}
+
+.documentation a {
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Inherits the text color */
+}
+
+.documentation div {
+    margin-right: 20px; /* Add space between the divs */
+}
+
+.documentation h2 {
+    margin: 0;
+    font-size: 25px; /* Adjust font size as needed */
+}
+
+.documentation h2 a:hover {
+    text-decoration: underline; /* Optional: underline on hover for better UX */
+    text-decoration-color: #005691;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: transparent;
+    color: #333;
+    font-size: 20px;
+    bottom: 10;
+    width: 100%;
+    z-index: 100;
+}
+
+footer p {
+    margin: 0;
+}
