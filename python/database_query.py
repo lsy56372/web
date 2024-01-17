@@ -19,35 +19,35 @@ print("<title>Report</title>")
 print('''<style>
         input[type="submit"] {
             
-            background-color: #4CAF50; /* 绿色背景 */
-            color: white; /* 白色文字 */
-            padding: 12px 20px; /* 内边距 */
-            border: none; /* 无边框 */
-            border-radius: 4px; /* 圆角边框 */
-            cursor: pointer; /* 鼠标悬停时的手形图标 */
-            font-size: 16px; /* 字体大小 */
+            background-color: #4CAF50; 
+            color: white;
+            padding: 12px 20px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 16px; 
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049; /* 鼠标悬停时的背景颜色变化 */
+            background-color: #45a049; 
         }
         .database-instructions {
-    margin-top: 5px; /* 上方留出空间 */
-    padding: 10px; /* 内部填充 */
-    border: 1px solid #ccc; /* 边框，如果需要 */
-    border-radius: 5px; /* 边框圆角 */
-    background-color: #f9f9f9; /* 背景色 */
+    margin-top: 5px; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #f9f9f9; 
 }
 
 .database-instructions h3 {
-    color: #333; /* 标题颜色 */
-    margin-bottom: 5px; /* 标题下方留出空间 */
+    color: #333; 
+    margin-bottom: 5px; 
 }
 
 .database-instructions p {
-    font-size: 1rem; /* 文本大小 */
-    color: #666; /* 文本颜色 */
-    margin-bottom: 5px; /* 段落之间留出空间 */
+    font-size: 1rem; 
+    color: #666; 
+    margin-bottom: 5px; 
 }
 
 
@@ -78,7 +78,7 @@ print('''
     <label for="attributeSelect">Choose an attribute:</label>
     <select name="attribute" id="attributeSelect" multiple>
         <option value="">Select an attribute</option>
-        <!-- 属性选项将基于选择的表动态填充 -->
+      
     </select>
 
     <label for="limitSelect">Number of records:</label>
