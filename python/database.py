@@ -19,7 +19,7 @@ print("<h3>Database Table</h3>")
 table_names = ["Species", "Land_Types", "Species_Resistance_Values", "Greenspaces", "Connectivity_Maps", "Datazones"]
 
 try:
-    conn = cx_Oracle.connect("s2491874/s2491874@geoslearn")
+    conn = cx_Oracle.connect("***************")
     c = conn.cursor()
 
     for table_name in table_names:
