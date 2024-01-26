@@ -137,7 +137,7 @@ selectedTables.forEach(function(table) {
 
 
 try:
-    conn = cx_Oracle.connect("s2491874/s2491874@geoslearn")
+    conn = cx_Oracle.connect("**************")
     c = conn.cursor()
 
     
